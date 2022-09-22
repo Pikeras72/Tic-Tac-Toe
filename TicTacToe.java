@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Solution {
+public class TicTacToe {
     public static void main(String[]args){
         String[][] tablero = new String[3][3];
         for (int i = 0; i < 3; i++){
@@ -28,8 +28,65 @@ public class Solution {
             }
         }
         acepta = false;
-        if (respuestaIntro == 1){                                         //COMPROBACIONES
-
+        boolean ganado1 = false;
+        int turno = 0;
+        if (respuestaIntro == 1){                                         
+            while (!acepta){
+                try {
+                    System.out.println();
+                    System.out.print("\n1 - Empieza el Ordenador    ||     2 -  Empiezas tú  -->  ");
+                    respuestaInicio = Integer.parseInt(teclado.nextLine());
+                    if (respuestaInicio != 1 && respuestaInicio != 2){
+                        acepta = false;
+                        System.out.println("Error, repítelo");
+                    }else{
+                        acepta = true;
+                    }
+                }catch (Exception e){
+                    System.out.println("Error, repítelo");
+                }
+            }
+            if (respuestaInicio == 1){
+                tablero[1][1] = "X";
+                mostrar(tablero);
+                while(!comprobar(tablero) && turno < 4){
+                    turno++;
+                    turnoOrdenador(tablero);
+                    mostrar(tablero);
+                    if (comprobar(tablero)){
+                        System.out.println("HA GANADO EL ORDENADOR");
+                        ganado1 = true;
+                        break;
+                    }
+                    turno(1,tablero, teclado);
+                    mostrar(tablero);
+                }
+                if (turno <4 && !ganado1){
+                    System.out.println("HAS GANADO");
+                }else if(!ganado1){
+                    System.out.println("EMPATE");
+                }
+            }else{
+                tablero[1][1] = "O";
+                mostrar(tablero);
+                while(!comprobar(tablero) && turno < 4){
+                    turno++;
+                    turno(1,tablero, teclado);
+                    mostrar(tablero);
+                    if (comprobar(tablero)){
+                        System.out.println("HAS GANADO");
+                        ganado1 = true;
+                        break;
+                    }
+                    turnoOrdenador(tablero);
+                    mostrar(tablero);
+                }
+                if (turno <4 && !ganado1){
+                    System.out.println("HA GANADO EL ORDENADOR");
+                }else if(!ganado1){
+                    System.out.println("EMPATE");
+                }
+            }
         }else{
             while (!acepta){
                 try {
@@ -46,8 +103,6 @@ public class Solution {
                     System.out.println("Error, repítelo");
                 }
             }
-            int turno = 0;
-            boolean ganado1 = false;
             if (respuestaInicio == 1){
                 tablero[1][1] = "X";
                 mostrar(tablero);
@@ -68,11 +123,25 @@ public class Solution {
                 }else if(!ganado1){
                     System.out.println("EMPATE");
                 }
-            }else{                                                //COMPROBACIONES
+            }else{
                 tablero[1][1] = "O";
                 mostrar(tablero);
-                while(!comprobar(tablero)){                                         //COMPROBACIONES
+                while(!comprobar(tablero) && turno < 4){
+                    turno++;
                     turno(1,tablero, teclado);
+                    mostrar(tablero);
+                    if (comprobar(tablero)){
+                        System.out.println("HA GANADO EL JUGADOR 1");
+                        ganado1 = true;
+                        break;
+                    }
+                    turno(2,tablero, teclado);
+                    mostrar(tablero);
+                }
+                if (turno <4 && !ganado1){
+                    System.out.println("HA GANADO EL JUGADOR 2");
+                }else if(!ganado1){
+                    System.out.println("EMPATE");
                 }
             }
         }
@@ -156,6 +225,10 @@ public class Solution {
         }else{
             tablero[fila][columna] = "O";
         }
+    }
+    
+    public static void turnoOrdenador(String[][] tablero){                                  //COMPROBACIONES
+        
     }
 
     public static void mostrar(String[][] tablero){
