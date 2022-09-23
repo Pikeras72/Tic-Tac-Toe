@@ -11,7 +11,7 @@ public class TicTacToe {
         Scanner teclado = new Scanner(System.in);
         System.out.print("\nTIK TAK TOE by Diego Ruiz Piqueras");
         boolean acepta = false;
-        int respuestaIntro = 0, respuestaInicio = 0;
+        int respuestaIntro = 0, respuestaInicio = 0, respuestaDifi = 0;
         while (!acepta){
             try {
                 System.out.println();
@@ -30,11 +30,27 @@ public class TicTacToe {
         acepta = false;
         boolean ganado1 = false;
         int turno = 0;
-        if (respuestaIntro == 1){                                         
+        if (respuestaIntro == 1){
             while (!acepta){
                 try {
                     System.out.println();
-                    System.out.print("\n1 - Empieza el Ordenador    ||     2 -  Empiezas tú  -->  ");
+                    System.out.print("\n1 - Dificultad Intermedia   ||     2 -  Dificultad Imposible  -->  ");
+                    respuestaDifi = Integer.parseInt(teclado.nextLine());
+                    if (respuestaDifi != 1 && respuestaDifi != 2){
+                        acepta = false;
+                        System.out.println("Error, repítelo");
+                    }else{
+                        acepta = true;
+                    }
+                }catch (Exception e){
+                    System.out.println("Error, repítelo");
+                }
+            }
+            acepta = false;
+            while (!acepta){
+                try {
+                    System.out.println();
+                    System.out.print("\n1 - Empieza tú    ||     2 -  Empiezas el Ordenador  -->  ");
                     respuestaInicio = Integer.parseInt(teclado.nextLine());
                     if (respuestaInicio != 1 && respuestaInicio != 2){
                         acepta = false;
@@ -51,7 +67,11 @@ public class TicTacToe {
                 mostrar(tablero);
                 while(!comprobar(tablero) && turno < 4){
                     turno++;
-                    turnoOrdenador(tablero);
+                    if (respuestaDifi == 1){
+                        turnoOrdenador(tablero);
+                    }else{
+                        turnoOrdenador(tablero);
+                    }
                     mostrar(tablero);
                     if (comprobar(tablero)){
                         System.out.println("HA GANADO EL ORDENADOR");
@@ -78,7 +98,11 @@ public class TicTacToe {
                         ganado1 = true;
                         break;
                     }
-                    turnoOrdenador(tablero);
+                    if (respuestaDifi == 1){
+                        turnoOrdenadorImposible(tablero);
+                    }else{
+                        turnoOrdenadorImposible(tablero);
+                    }
                     mostrar(tablero);
                 }
                 if (turno <4 && !ganado1){
@@ -183,8 +207,9 @@ public class TicTacToe {
 
     public static void turno(int turno, String[][] tablero, Scanner teclado){
         int columna = -1, fila = -1;
-        boolean acepta = false;
+        boolean acepta;
         do {
+            acepta = false;
             if(turno == 1){
                 System.out.println("TURNO DE: X");
             }else{
@@ -226,9 +251,211 @@ public class TicTacToe {
             tablero[fila][columna] = "O";
         }
     }
-    
-    public static void turnoOrdenador(String[][] tablero){                                  //COMPROBACIONES
-        
+
+    public static void turnoOrdenadorImposible(String[][] tablero){
+        if (tablero[0][0].equals("O") && tablero[0][1].equals("O") && tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("O") && tablero[1][1].equals("O") && tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("O") && tablero[2][1].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][0].equals("O") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][1].equals("O") && tablero[1][1].equals("O") && tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][2].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][1].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][1].equals("O") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[0][1].equals("") && tablero[0][2].equals("O")){
+            tablero[0][1] = "O";
+        }else if (tablero[2][0].equals("O") && tablero[2][1].equals("") && tablero[2][2].equals("O")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][0].equals("") && tablero[2][0].equals("O")){
+            tablero[1][0] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][2].equals("") && tablero[2][2].equals("O")){
+            tablero[1][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[0][1].equals("O") && tablero[0][2].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[1][0].equals("") && tablero[1][1].equals("O") && tablero[1][2].equals("O")){
+            tablero[1][0] = "O";
+        }else if (tablero[2][0].equals("") && tablero[2][1].equals("O") && tablero[2][2].equals("O")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][0].equals("O") && tablero[2][0].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("") && tablero[1][1].equals("O") && tablero[2][1].equals("O")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][2].equals("O") && tablero[2][2].equals("O")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][1].equals("O") && tablero[2][2].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][1].equals("O") && tablero[2][0].equals("O")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[0][1].equals("X") && tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("X") && tablero[1][1].equals("X") && tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("X") && tablero[2][1].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][0].equals("X") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][1].equals("X") && tablero[1][1].equals("X") && tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][2].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][1].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][1].equals("X") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[0][1].equals("") && tablero[0][2].equals("X")){
+            tablero[0][1] = "O";
+        }else if (tablero[2][0].equals("X") && tablero[2][1].equals("") && tablero[2][2].equals("X")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][0].equals("") && tablero[2][0].equals("X")){
+            tablero[1][0] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][2].equals("") && tablero[2][2].equals("X")){
+            tablero[1][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[0][1].equals("X") && tablero[0][2].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[1][0].equals("") && tablero[1][1].equals("X") && tablero[1][2].equals("X")){
+            tablero[1][0] = "O";
+        }else if (tablero[2][0].equals("") && tablero[2][1].equals("X") && tablero[2][2].equals("X")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][0].equals("X") && tablero[2][0].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("") && tablero[1][1].equals("X") && tablero[2][1].equals("X")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][2].equals("X") && tablero[2][2].equals("X")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][1].equals("X") && tablero[2][2].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][1].equals("X") && tablero[2][0].equals("X")){
+            tablero[0][2] = "O";
+        }else if(tablero[1][1].equals("X") && tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("")){
+            tablero[1][0] = "O";
+        }else if (tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }
+    }
+
+    public static void turnoOrdenador(String[][] tablero){
+        if (tablero[0][0].equals("O") && tablero[0][1].equals("O") && tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("O") && tablero[1][1].equals("O") && tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("O") && tablero[2][1].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][0].equals("O") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][1].equals("O") && tablero[1][1].equals("O") && tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][2].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][1].equals("O") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][1].equals("O") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[0][1].equals("") && tablero[0][2].equals("O")){
+            tablero[0][1] = "O";
+        }else if (tablero[2][0].equals("O") && tablero[2][1].equals("") && tablero[2][2].equals("O")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][0].equals("O") && tablero[1][0].equals("") && tablero[2][0].equals("O")){
+            tablero[1][0] = "O";
+        }else if (tablero[0][2].equals("O") && tablero[1][2].equals("") && tablero[2][2].equals("O")){
+            tablero[1][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[0][1].equals("O") && tablero[0][2].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[1][0].equals("") && tablero[1][1].equals("O") && tablero[1][2].equals("O")){
+            tablero[1][0] = "O";
+        }else if (tablero[2][0].equals("") && tablero[2][1].equals("O") && tablero[2][2].equals("O")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][0].equals("O") && tablero[2][0].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("") && tablero[1][1].equals("O") && tablero[2][1].equals("O")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][2].equals("O") && tablero[2][2].equals("O")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][1].equals("O") && tablero[2][2].equals("O")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][1].equals("O") && tablero[2][0].equals("O")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[0][1].equals("X") && tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("X") && tablero[1][1].equals("X") && tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("X") && tablero[2][1].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][0].equals("X") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][1].equals("X") && tablero[1][1].equals("X") && tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][2].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][1].equals("X") && tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][1].equals("X") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[0][1].equals("") && tablero[0][2].equals("X")){
+            tablero[0][1] = "O";
+        }else if (tablero[2][0].equals("X") && tablero[2][1].equals("") && tablero[2][2].equals("X")){
+            tablero[2][1] = "O";
+        }else if (tablero[0][0].equals("X") && tablero[1][0].equals("") && tablero[2][0].equals("X")){
+            tablero[1][0] = "O";
+        }else if (tablero[0][2].equals("X") && tablero[1][2].equals("") && tablero[2][2].equals("X")){
+            tablero[1][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[0][1].equals("X") && tablero[0][2].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[1][0].equals("") && tablero[1][1].equals("X") && tablero[1][2].equals("X")){
+            tablero[1][0] = "O";
+        }else if (tablero[2][0].equals("") && tablero[2][1].equals("X") && tablero[2][2].equals("X")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][0].equals("X") && tablero[2][0].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("") && tablero[1][1].equals("X") && tablero[2][1].equals("X")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][2].equals("X") && tablero[2][2].equals("X")){
+            tablero[0][2] = "O";
+        }else if (tablero[0][0].equals("") && tablero[1][1].equals("X") && tablero[2][2].equals("X")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][2].equals("") && tablero[1][1].equals("X") && tablero[2][0].equals("X")){
+            tablero[0][2] = "O";
+        }else if(tablero[1][1].equals("X") && tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if(tablero[1][1].equals("X") && tablero[0][1].equals("X") && tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[0][0].equals("")){
+            tablero[0][0] = "O";
+        }else if (tablero[0][1].equals("")){
+            tablero[0][1] = "O";
+        }else if (tablero[0][2].equals("")){
+            tablero[0][2] = "O";
+        }else if (tablero[1][0].equals("")){
+            tablero[1][0] = "O";
+        }else if (tablero[1][2].equals("")){
+            tablero[1][2] = "O";
+        }else if (tablero[2][0].equals("")){
+            tablero[2][0] = "O";
+        }else if (tablero[2][1].equals("")){
+            tablero[2][1] = "O";
+        }else if (tablero[2][2].equals("")){
+            tablero[2][2] = "O";
+        }
     }
 
     public static void mostrar(String[][] tablero){
@@ -246,3 +473,5 @@ public class TicTacToe {
         System.out.println();
     }
 }
+
+//by DIEGO RUIZ PIQUERAS in 4 hours
